@@ -6,8 +6,25 @@
  */
 
 require('./bootstrap');
+// index.js or main.js
+import 'vuetify/dist/vuetify.min.css' // Ensure you are using css-loader
+
+import 'material-design-icons-iconfont/dist/material-design-icons.css'
 
 window.Vue = require('vue');
+import Vuex from 'vuex'
+import Vuetify from 'vuetify'
+import VueRouter from 'vue-router'
+import WebFontLoader from 'webfontloader'
+
+
+Vue.use(Vuex)
+
+Vue.use(VueRouter)
+
+Vue.use(Vuetify)
+
+
 
 /**
  * The following block of code may be used to automatically register your
@@ -20,7 +37,6 @@ window.Vue = require('vue');
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -29,5 +45,9 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
  */
 
 const app = new Vue({
-    el: '#app'
+    el: '#app',
+    data: {
+      drawer: null,
+      source: null
+    }
 });
