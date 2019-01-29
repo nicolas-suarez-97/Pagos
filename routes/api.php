@@ -17,4 +17,22 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::resource('/users', 'UsersController');
+Route::resource('transacciones', 'TransationsController');
+
+Route::middleware(['auth', 'role:admin'])->group(function () {
+  Route::resource('users','UsersController')->only([
+      'index', 'show', 'store', 'update', 'destroy'
+  ]);
+});
+
+Route::middleware(['auth', 'role:aliado'])->group(function () {
+  Route::resource('users','UsersController')->only([
+      'index', 'show'
+  ]);
+});
+
+Route::middleware(['auth', 'role:user'])->group(function () {
+  Route::resource('users','UsersController')->only([
+      'index', 'show'
+  ]);
+});

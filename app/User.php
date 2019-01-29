@@ -28,6 +28,11 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    /**
+     * [roles description]
+     * @return [type] [description]
+     */
+
     public function roles()
    {
        return $this
@@ -64,4 +69,16 @@ class User extends Authenticatable
        }
        return false;
    }
+
+   /**
+    * [transations description]
+    * @return [type] [description]
+    */
+   
+   public function transations()
+  {
+      return $this
+          ->belongsToMany('App\Transation')
+          ->withTimestamps();
+  }
 }

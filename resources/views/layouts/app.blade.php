@@ -28,22 +28,50 @@
           app
         >
           <v-list dense>
+            @auth
             <v-list-tile @click="">
               <v-list-tile-action>
                 <v-icon>home</v-icon>
               </v-list-tile-action>
               <v-list-tile-content>
-                <v-list-tile-title>Home</v-list-tile-title>
+                <v-list-tile-title><a href="{{route('home')}}">Home</a></v-list-tile-title>
               </v-list-tile-content>
             </v-list-tile>
+          @endauth
+          @guest
             <v-list-tile @click="">
               <v-list-tile-action>
                 <v-icon>contact_mail</v-icon>
               </v-list-tile-action>
               <v-list-tile-content>
-                <v-list-tile-title>Contact</v-list-tile-title>
+                <v-list-tile-title><a class="main-icon" href="{{route('login')}}">Ingresar</a></v-list-tile-title>
               </v-list-tile-content>
             </v-list-tile>
+            @if (Route::has('register'))
+            <v-list-tile @click="">
+              <v-list-tile-action>
+                <v-icon>home</v-icon>
+              </v-list-tile-action>
+              <v-list-tile-content>
+                <v-list-tile-title><a href="{{route('register')}}">Registro</a></v-list-tile-title>
+              </v-list-tile-content>
+            </v-list-tile>
+            @endif
+          @else
+            <v-list-tile @click="">
+              <v-list-tile-action>
+                <v-icon>contact_mail</v-icon>
+              </v-list-tile-action>
+              <v-list-tile-content>
+                <v-list-tile-title><a href="{{ route('logout') }}"
+                   onclick="event.preventDefault();
+                                 document.getElementById('logout-form').submit();">
+                                 Cerrar sesión</a><form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                     @csrf
+                                 </form></v-list-tile-title>
+              </v-list-tile-content>
+            </v-list-tile>
+          @endguest
           </v-list>
         </v-navigation-drawer>
         <v-toolbar color="indigo" dark fixed app>
