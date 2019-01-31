@@ -105,12 +105,12 @@
           </v-container>
         </v-content>
         <v-footer color="indigo" app>
-          <layout
+          <v-layout
           justify-center
           align-center
           >
             <span class="white--text">Tecnovulario | &copy; 2019</span>
-          </layout>
+          </v-layout>
         </v-footer>
       </v-app>
 
