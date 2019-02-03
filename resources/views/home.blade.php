@@ -1,23 +1,14 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">Dashboard</div>
 
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
+<canvas id="canvasQR" width="200" height="200" class="img-responsive center-block img-thumbnail" class="text-center"></canvas>
 
-                    You are logged in!
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+@section('scripts')
+  <script type="text/javascript" src="{{asset('js/recibir.js')}}"></script>
+  <script type="text/javascript">
+  //Generador QR
+  $('#canvasQR').qrcode({'text':'1MoFKJj8DuPuf4HRKzP6UXEtTQA162LgHh'});
+  </script>
+
 @endsection
