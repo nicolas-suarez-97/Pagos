@@ -1,4 +1,4 @@
-
+'use strict'
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -43,11 +43,41 @@ Vue.use(Vuetify)
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
+Vue.component('recibir-tansfer', {
+  template: `
+    <div>
+      <v-card>
+        <v-card-title>Transferir a {{aliado.name}}</v-card-title>
+        <v-card-text>
+          <canvas id="canvasQR" width="200" height="200" class="img-responsive center-block img-thumbnail text-center"></canvas>
+        </v-card-text>
+      </v-card>
+    </div>
+  `,
+  mounted: function (){
+    this.printQr()
+  },
+  data: () => {
+    return {
+      aliado: {
+        name: 'Ejemplo',
+        publicKey: '',
+        wallet: ''
+      }
+    }
+  },
+  methods: {
+    printQr: function (){
+      alert('ok')
+    }
+  }
+})
 
 const app = new Vue({
     el: '#app',
     data: {
       drawer: null,
-      source: null
+      source: null,
+      wallet: 'cris'
     }
 });

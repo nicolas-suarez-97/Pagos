@@ -2084,14 +2084,31 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ }),
 
-/***/ 1:
-/*!*********************************************!*\
-  !*** multi ./resources/js/libs/QRJquery.js ***!
-  \*********************************************/
+/***/ "./resources/js/recibir/recibir.js":
+/*!*****************************************!*\
+  !*** ./resources/js/recibir/recibir.js ***!
+  \*****************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /home/crisroller/Documentos/pagos/app/resources/js/libs/QRJquery.js */"./resources/js/libs/QRJquery.js");
+"use strict";
+ //Generador QR
+
+$('#canvasQR').qrcode({
+  'text': '1MoFKJj8DuPuf4HRKzP6UXEtTQA162LgHh'
+});
+
+/***/ }),
+
+/***/ 1:
+/*!*******************************************************************************!*\
+  !*** multi ./resources/js/libs/QRJquery.js ./resources/js/recibir/recibir.js ***!
+  \*******************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(/*! /home/crisroller/Documentos/pagos/app/resources/js/libs/QRJquery.js */"./resources/js/libs/QRJquery.js");
+module.exports = __webpack_require__(/*! /home/crisroller/Documentos/pagos/app/resources/js/recibir/recibir.js */"./resources/js/recibir/recibir.js");
 
 
 /***/ })

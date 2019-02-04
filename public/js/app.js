@@ -76087,11 +76087,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
 /* harmony import */ var webfontloader__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! webfontloader */ "./node_modules/webfontloader/webfontloader.js");
 /* harmony import */ var webfontloader__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(webfontloader__WEBPACK_IMPORTED_MODULE_5__);
+
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
  * building robust, powerful web applications using Vue and Laravel.
  */
+
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js"); // index.js or main.js
 
 
@@ -76122,11 +76124,32 @@ Vue.use(vuetify__WEBPACK_IMPORTED_MODULE_3___default.a);
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+Vue.component('recibir-tansfer', {
+  template: "\n    <div>\n      <v-card>\n        <v-card-title>Transferir a {{aliado.name}}</v-card-title>\n        <v-card-text>\n          <canvas id=\"canvasQR\" width=\"200\" height=\"200\" class=\"img-responsive center-block img-thumbnail text-center\"></canvas>\n        </v-card-text>\n      </v-card>\n    </div>\n  ",
+  mounted: function mounted() {
+    this.printQr();
+  },
+  data: function data() {
+    return {
+      aliado: {
+        name: 'Ejemplo',
+        publicKey: '',
+        wallet: ''
+      }
+    };
+  },
+  methods: {
+    printQr: function printQr() {
+      alert('ok');
+    }
+  }
+});
 var app = new Vue({
   el: '#app',
   data: {
     drawer: null,
-    source: null
+    source: null,
+    wallet: 'cris'
   }
 });
 
