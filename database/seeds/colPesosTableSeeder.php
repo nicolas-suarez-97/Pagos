@@ -14,5 +14,13 @@ class colPesosTableSeeder extends Seeder
         $mount = new ColPeso();
         $mount->mount = 100000;
         $mount->save();
+
+        $mount = new ColPeso();
+        $mount->mount = 0;
+        $mount->save();
+
+        $mount = new ColPeso();
+        $mount->mount = 0;
+        $mount->save();
     }
 }

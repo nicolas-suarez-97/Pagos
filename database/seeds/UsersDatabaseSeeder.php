@@ -23,7 +23,10 @@ class UsersDatabaseSeeder extends Seeder
       $transationB = Transation::where('from_address', '1a34d3rvcstvtrt665ew45yhe7nbymmed6h')->first();
       $transationC = Transation::where('from_address', '1a34d3rvssrf5dx4ww4scd5grvet7e6s5qwg')->first();
 
+      //Cada usuario tiene que tener un mount asociado
       $mount = ColPeso::where('id', 1)->first();
+      $mount1 = ColPeso::where('id', 2)->first();
+      $mount2 = ColPeso::where('id', 3)->first();
 
       $user = new User();
       $user->name = 'Admin';
@@ -39,6 +42,7 @@ class UsersDatabaseSeeder extends Seeder
       $user->password = Hash::make('secret');
       $user->save();
       $user->roles()->attach($role_aliado);
+      $user->ColPesos()->attach($mount1);
 
       $user = new User();
       $user->name = 'User';
@@ -49,5 +53,6 @@ class UsersDatabaseSeeder extends Seeder
       $user->transations()->attach($transationA);
       $user->transations()->attach($transationB);
       $user->transations()->attach($transationC);
+      $user->ColPesos()->attach($mount2);
     }
 }
