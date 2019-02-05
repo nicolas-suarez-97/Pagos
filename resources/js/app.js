@@ -43,41 +43,61 @@ Vue.use(Vuetify)
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
+
+//*****************************
+//* Recibir                  **
+//* Tranferencias componente **
+//*****************************
+
 Vue.component('recibir-tansfer', {
   template: `
     <div>
       <v-card>
-        <v-card-title>Transferir a {{aliado.name}}</v-card-title>
+        <v-card-title>Transferir a {{infoUser.name}}</v-card-title>
         <v-card-text>
           <canvas id="canvasQR" width="200" height="200" class="img-responsive center-block img-thumbnail text-center"></canvas>
+          <h6>{{ infoUser.wallet }}</h6>
         </v-card-text>
+        <v-card-actions>
+          <v-btn color="primary">ok</v-btn>
+        </v-card-actions>
       </v-card>
     </div>
   `,
   mounted: function (){
     this.printQr()
   },
+  props: ['info-user'],
   data: () => {
     return {
-      aliado: {
-        name: 'Ejemplo',
-        publicKey: '',
-        wallet: ''
-      }
+      url: 'http://localhost:8000/'
     }
   },
   methods: {
     printQr: function (){
-      alert('ok')
+      try {
+        const qrcode = require('./libs/QRJquery.js');
+        $('#canvasQR').qrcode({'text':this.infoUser.wallet});
+      } catch (e) {
+          console.log('Error incluyendo y pintando el código qr :'+e);
+      }
+
     }
   }
 })
+
+
+
 
 const app = new Vue({
     el: '#app',
     data: {
       drawer: null,
       source: null,
-      wallet: 'cris'
+      user: {
+        name: 'Ejemplo',
+        publicKey: '',
+        wallet: '1MoFKJj8DuPuf4HRKzP6UXEtTQA162LgHh'
+      }
     }
 });

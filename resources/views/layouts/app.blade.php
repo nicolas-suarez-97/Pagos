@@ -19,6 +19,11 @@
 </head>
 <body>
     <div id="app">
+      <div class="info-container">
+        @auth
+          <input type="text" value="{{Auth::user()->name}}" v-model="user.name">
+        @endauth
+      </div>
       <v-app id="inspire">
         <v-navigation-drawer
           v-model="drawer"

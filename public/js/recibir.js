@@ -2093,10 +2093,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 "use strict";
  //Generador QR
-
-$('#canvasQR').qrcode({
-  'text': '1MoFKJj8DuPuf4HRKzP6UXEtTQA162LgHh'
-});
+//$('#canvasQR').qrcode({'text':'1MoFKJj8DuPuf4HRKzP6UXEtTQA162LgHh'});
 
 /***/ }),
 

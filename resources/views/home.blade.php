@@ -13,8 +13,7 @@
 
   @elseif (Auth::user()->hasRole('aliado'))
     <div>
-      <recibir-tansfer>
-      </recibir-tansfer>
+      <recibir-tansfer :info-user="user"/>
     </div>
 
 
@@ -43,7 +42,7 @@
 
   @elseif (Auth::user()->hasRole('aliado'))
 
-    <script type="text/javascript" src="{{asset('js/recibir.js')}}"></script>
+
 
 
   @elseif (Auth::user()->hasRole('user'))
