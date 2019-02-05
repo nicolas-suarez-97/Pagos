@@ -4,6 +4,7 @@ use Illuminate\Database\Seeder;
 use App\User;
 use App\Role;
 use App\Transation;
+use App\ColPeso;
 
 class UsersDatabaseSeeder extends Seeder
 {
@@ -22,12 +23,15 @@ class UsersDatabaseSeeder extends Seeder
       $transationB = Transation::where('from_address', '1a34d3rvcstvtrt665ew45yhe7nbymmed6h')->first();
       $transationC = Transation::where('from_address', '1a34d3rvssrf5dx4ww4scd5grvet7e6s5qwg')->first();
 
+      $mount = ColPeso::where('id', 1)->first();
+
       $user = new User();
       $user->name = 'Admin';
       $user->email = 'admin@example.com';
       $user->password = Hash::make('secret');
       $user->save();
       $user->roles()->attach($role_admin);
+      $user->ColPesos()->attach($mount);
 
       $user = new User();
       $user->name = 'Aliado';

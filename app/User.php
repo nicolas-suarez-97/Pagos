@@ -74,11 +74,20 @@ class User extends Authenticatable
     * [transations description]
     * @return [type] [description]
     */
-   
+
    public function transations()
   {
       return $this
           ->belongsToMany('App\Transation')
           ->withTimestamps();
   }
+
+
+  public function ColPesos()
+  {
+    return $this
+      ->belongsToMany('App\ColPeso')
+      ->withTimestamps();
+  }
+
 }
