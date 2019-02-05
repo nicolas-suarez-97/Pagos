@@ -58,9 +58,6 @@ Vue.component('recibir-tansfer', {
           <canvas id="canvasQR" width="200" height="200" class="img-responsive center-block img-thumbnail text-center"></canvas>
           <h6>{{ infoUser.wallet }}</h6>
         </v-card-text>
-        <v-card-actions>
-          <v-btn color="primary">ok</v-btn>
-        </v-card-actions>
       </v-card>
     </div>
   `,

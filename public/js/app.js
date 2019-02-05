@@ -76129,7 +76129,7 @@ Vue.use(vuetify__WEBPACK_IMPORTED_MODULE_3___default.a);
 //*****************************
 
 Vue.component('recibir-tansfer', {
-  template: "\n    <div>\n      <v-card>\n        <v-card-title>Transferir a {{infoUser.name}}</v-card-title>\n        <v-card-text>\n          <canvas id=\"canvasQR\" width=\"200\" height=\"200\" class=\"img-responsive center-block img-thumbnail text-center\"></canvas>\n          <h6>{{ infoUser.wallet }}</h6>\n        </v-card-text>\n        <v-card-actions>\n          <v-btn color=\"primary\">ok</v-btn>\n        </v-card-actions>\n      </v-card>\n    </div>\n  ",
+  template: "\n    <div>\n      <v-card>\n        <v-card-title>Transferir a {{infoUser.name}}</v-card-title>\n        <v-card-text>\n          <canvas id=\"canvasQR\" width=\"200\" height=\"200\" class=\"img-responsive center-block img-thumbnail text-center\"></canvas>\n          <h6>{{ infoUser.wallet }}</h6>\n        </v-card-text>\n      </v-card>\n    </div>\n  ",
   mounted: function mounted() {
     this.printQr();
   },

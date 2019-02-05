@@ -40,6 +40,45 @@
                 <v-list-tile-title><a href="{{route('home')}}">Home</a></v-list-tile-title>
               </v-list-tile-content>
             </v-list-tile>
+            <v-list-tile @click="">
+              <v-list-tile-action>
+                <v-icon>person</v-icon>
+              </v-list-tile-action>
+              <v-list-tile-content>
+                <v-list-tile-title><a href="{{route('home')}}">Perfil</a></v-list-tile-title>
+              </v-list-tile-content>
+            </v-list-tile>
+            @if(Auth::user()->hasRole('admin'))
+              <v-list-tile @click="">
+                <v-list-tile-action>
+                  <v-icon>home</v-icon>
+                </v-list-tile-action>
+                <v-list-tile-content>
+                  <v-list-tile-title><a href="{{route('home')}}">Depositar</a></v-list-tile-title>
+                </v-list-tile-content>
+              </v-list-tile>
+
+            @elseif (Auth::user()->hasRole('aliado'))
+
+              <v-list-tile @click="">
+                <v-list-tile-action>
+                  <v-icon>send</v-icon>
+                </v-list-tile-action>
+                <v-list-tile-content>
+                  <v-list-tile-title><a href="{{route('home')}}">Enviar Transferencia</a></v-list-tile-title>
+                </v-list-tile-content>
+              </v-list-tile>
+
+            @elseif (Auth::user()->hasRole('user'))
+              <v-list-tile @click="">
+                <v-list-tile-action>
+                  <v-icon>home</v-icon>
+                </v-list-tile-action>
+                <v-list-tile-content>
+                  <v-list-tile-title><a href="{{route('home')}}">Recibir Transferencia</a></v-list-tile-title>
+                </v-list-tile-content>
+              </v-list-tile>
+            @endif
           @endauth
           @guest
             <v-list-tile @click="">
@@ -63,7 +102,7 @@
           @else
             <v-list-tile @click="">
               <v-list-tile-action>
-                <v-icon>contact_mail</v-icon>
+                <v-icon>cancel</v-icon>
               </v-list-tile-action>
               <v-list-tile-content>
                 <v-list-tile-title><a href="{{ route('logout') }}"
