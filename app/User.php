@@ -90,4 +90,8 @@ class User extends Authenticatable
       ->withTimestamps();
   }
 
+  public function coinpayment_transactions(){
+      return $this->hasMany(cointpayment_log_trx::class, 'user_id');
+    }
+
 }

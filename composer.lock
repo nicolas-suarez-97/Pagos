@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "66ca7343889332c2b8ecca11c251430c",
+    "content-hash": "b42fc65f8851b476beacda761e09f1d0",
     "packages": [
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -548,6 +548,60 @@
                 "url"
             ],
             "time": "2018-12-04T20:46:45+00:00"
+        },
+        {
+            "name": "hexters/coinpayment",
+            "version": "v1.1.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/hexters/CoinPayment.git",
+                "reference": "33ff851cff4a4fd579a0774ba5b745acb0c8846e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/hexters/CoinPayment/zipball/33ff851cff4a4fd579a0774ba5b745acb0c8846e",
+                "reference": "33ff851cff4a4fd579a0774ba5b745acb0c8846e",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "^6.3",
+                "nesbot/carbon": "^1.25",
+                "php": ">=7.1"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Hexters\\CoinPayment\\Providers\\CoinPaymentServiceProvider"
+                    ],
+                    "aliases": {
+                        "CoinPayment": "Hexters\\CoinPayment\\Providers\\CoinPaymentFacade"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Hexters\\CoinPayment\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Saifullah Syahidin",
+                    "email": "hexters@gmail.com"
+                }
+            ],
+            "description": "CoinPayment PHP client for Laravel",
+            "keywords": [
+                "Coinpayment",
+                "cryptocurrency",
+                "payment gateway",
+                "payment method"
+            ],
+            "time": "2018-04-18T07:52:13+00:00"
         },
         {
             "name": "jakub-onderka/php-console-color",
@@ -1998,6 +2052,54 @@
                 "uuid"
             ],
             "time": "2018-07-19T23:38:55+00:00"
+        },
+        {
+            "name": "stormpat/crypto-coin",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/stormpat/CryptoCoin.git",
+                "reference": "a12315277eb0ad9945878113dc53d1d66046958d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/stormpat/CryptoCoin/zipball/a12315277eb0ad9945878113dc53d1d66046958d",
+                "reference": "a12315277eb0ad9945878113dc53d1d66046958d",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "suggest": {
+                "ext-bcmath": "The is a fallback, and if the GMP is not availabe this is a requirement.",
+                "ext-gmp": "Add the GMP extension for better performance."
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "CryptoCoin": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Patrik Storm",
+                    "email": "storm.patrik@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Generate cryptocurrency addresses and private keys with PHP.",
+            "keywords": [
+                "address",
+                "bitcoin",
+                "cryptocurrency",
+                "generator",
+                "litecoin"
+            ],
+            "time": "2014-02-26T08:19:31+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -4931,7 +5033,9 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "stormpat/crypto-coin": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
