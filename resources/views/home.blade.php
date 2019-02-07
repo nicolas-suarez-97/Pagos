@@ -2,11 +2,9 @@
 
 @section('content')
   @if(Auth::user()->hasRole('admin'))
-
     <v-card>
-      <v-card-title>Transferir a: </v-card-title>
       <v-card-text>
-        <p>Hola admin</p>
+        <p class="display-2 .font-weight-thin.font-italic text-info">Paga Fácil</p>
       </v-card-text>
     </v-card>
 
