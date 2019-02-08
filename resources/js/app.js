@@ -97,13 +97,14 @@ Vue.component('enviar-tansfer', {
       <img v-if="coin.url" :src="coin.url" />
       <p class="headline text-capitalize">{{coin.name}}</p>
       <p class="subheading text-danger .font-weight-regular.font-italic ">{{ error }}</p>
+      <p class="font-weight-regular title">{{ coin.wallet }}</p>
       <v-tooltip left>
       <v-btn slot="activator" icon large @click="scannerQrSwitch(true)">
         <v-icon large >camera</v-icon>
       </v-btn>
       <span>Leer número de cuenta</span>
     </v-tooltip>
-        <v-text-field prepend-icon="person" name="wallet" label="Wallet" type="text" v-model="result"></v-text-field>
+        <v-text-field prepend-icon="person" name="wallet" class="text-center" label="Wallet" type="text" v-model="coin.wallet"></v-text-field>
         <v-tooltip left>
           <v-btn slot="activator" icon large>
             <v-icon large class="text-info">send</v-icon>
@@ -117,7 +118,6 @@ Vue.component('enviar-tansfer', {
           Loading...
         </div>
       </qrcode-stream>
-        <p>{{result}}</p>
         <v-tooltip left>
           <v-btn slot="activator" icon large>
             <v-icon large class="text-info" @click="scannerQrSwitch(false)">cancel</v-icon>
@@ -142,15 +142,26 @@ Vue.component('enviar-tansfer', {
       },
       coin: {
         name: '',
-        url: ''
+        url: '',
+        wallet: ''
       }
     }
   },
   methods: {
     onDecode (result) {
-      this.result = result
+      this.result = this.quiteDosPuntos(result)
+      this.coin.name = this.result[0]
+      this.coin.wallet = this.result[1]
+      this.camera.active = false
+      this.coin.name = this.noSpace(this.coin.name)
     },
-
+    noSpace: function (s) {
+      return s.replace(/ /g, "")
+    },
+    quiteDosPuntos: function (s) {
+      var separador = ':'
+      return s.split(separador)
+    },
     async onInit (promise) {
       this.loading = true
       try {

@@ -82626,7 +82626,7 @@ Vue.component('recibir-tansfer', {
   }
 });
 Vue.component('enviar-tansfer', {
-  template: "\n    <div>\n    <v-card>\n      <v-card-title>Transferir</v-card-title>\n      <v-card-text\n      v-if=\"!camera.active\"\n      justify-center\n      align-center\n      >\n      <img v-if=\"coin.url\" :src=\"coin.url\" />\n      <p class=\"headline text-capitalize\">{{coin.name}}</p>\n      <p class=\"subheading text-danger .font-weight-regular.font-italic \">{{ error }}</p>\n      <v-tooltip left>\n      <v-btn slot=\"activator\" icon large @click=\"scannerQrSwitch(true)\">\n        <v-icon large >camera</v-icon>\n      </v-btn>\n      <span>Leer n\xFAmero de cuenta</span>\n    </v-tooltip>\n        <v-text-field prepend-icon=\"person\" name=\"wallet\" label=\"Wallet\" type=\"text\" v-model=\"result\"></v-text-field>\n        <v-tooltip left>\n          <v-btn slot=\"activator\" icon large>\n            <v-icon large class=\"text-info\">send</v-icon>\n          </v-btn>\n          <span>Transferir</span>\n        </v-tooltip>\n      </v-card-text>\n      <v-card-text v-else>\n      <qrcode-stream @decode=\"onDecode\" @init=\"onInit\" v-if=\"!camera.destroyed\">\n        <div class=\"loading-indicator\" v-if=\"camera.loading\">\n          Loading...\n        </div>\n      </qrcode-stream>\n        <p>{{result}}</p>\n        <v-tooltip left>\n          <v-btn slot=\"activator\" icon large>\n            <v-icon large class=\"text-info\" @click=\"scannerQrSwitch(false)\">cancel</v-icon>\n          </v-btn>\n          <span>Cancelar</span>\n        </v-tooltip>\n      </v-card-text>\n    </v-card>\n    </div>\n  ",
+  template: "\n    <div>\n    <v-card>\n      <v-card-title>Transferir</v-card-title>\n      <v-card-text\n      v-if=\"!camera.active\"\n      justify-center\n      align-center\n      >\n      <img v-if=\"coin.url\" :src=\"coin.url\" />\n      <p class=\"headline text-capitalize\">{{coin.name}}</p>\n      <p class=\"subheading text-danger .font-weight-regular.font-italic \">{{ error }}</p>\n      <p class=\"font-weight-regular title\">{{ coin.wallet }}</p>\n      <v-tooltip left>\n      <v-btn slot=\"activator\" icon large @click=\"scannerQrSwitch(true)\">\n        <v-icon large >camera</v-icon>\n      </v-btn>\n      <span>Leer n\xFAmero de cuenta</span>\n    </v-tooltip>\n        <v-text-field prepend-icon=\"person\" name=\"wallet\" class=\"text-center\" label=\"Wallet\" type=\"text\" v-model=\"coin.wallet\"></v-text-field>\n        <v-tooltip left>\n          <v-btn slot=\"activator\" icon large>\n            <v-icon large class=\"text-info\">send</v-icon>\n          </v-btn>\n          <span>Transferir</span>\n        </v-tooltip>\n      </v-card-text>\n      <v-card-text v-else>\n      <qrcode-stream @decode=\"onDecode\" @init=\"onInit\" v-if=\"!camera.destroyed\">\n        <div class=\"loading-indicator\" v-if=\"camera.loading\">\n          Loading...\n        </div>\n      </qrcode-stream>\n        <v-tooltip left>\n          <v-btn slot=\"activator\" icon large>\n            <v-icon large class=\"text-info\" @click=\"scannerQrSwitch(false)\">cancel</v-icon>\n          </v-btn>\n          <span>Cancelar</span>\n        </v-tooltip>\n      </v-card-text>\n    </v-card>\n    </div>\n  ",
   mounted: function mounted() {},
   props: ['info-user'],
   data: function data() {
@@ -82640,13 +82640,25 @@ Vue.component('enviar-tansfer', {
       },
       coin: {
         name: '',
-        url: ''
+        url: '',
+        wallet: ''
       }
     };
   },
   methods: {
     onDecode: function onDecode(result) {
-      this.result = result;
+      this.result = this.quiteDosPuntos(result);
+      this.coin.name = this.result[0];
+      this.coin.wallet = this.result[1];
+      this.camera.active = false;
+      this.coin.name = this.noSpace(this.coin.name);
+    },
+    noSpace: function noSpace(s) {
+      return s.replace(/ /g, "");
+    },
+    quiteDosPuntos: function quiteDosPuntos(s) {
+      var separador = ':';
+      return s.split(separador);
     },
     onInit: function () {
       var _onInit = _asyncToGenerator(
