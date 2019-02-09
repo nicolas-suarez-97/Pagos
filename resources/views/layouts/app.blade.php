@@ -80,7 +80,7 @@
             @elseif (Auth::user()->hasRole('user'))
               <v-list-tile @click="">
                 <v-list-tile-action>
-                  <v-icon>send</v-icon>
+                  <v-icon>get_app</v-icon>
                 </v-list-tile-action>
                 <v-list-tile-content>
                   <v-list-tile-title><a href="{{route('home')}}">Recibir Transferencia</a></v-list-tile-title>

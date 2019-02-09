@@ -19,7 +19,10 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->text('publicKey')->nullable();
+            $table->text('walletBTC')->nullable();
+            $table->text('walletETH')->nullable();
+            $table->text('walletBCH')->nullable();
+            $table->text('walletCOL')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

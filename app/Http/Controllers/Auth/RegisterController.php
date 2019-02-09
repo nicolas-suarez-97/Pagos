@@ -68,6 +68,9 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'walletBTC' => $data['btc'],
+            'walletETH' => $data['eth'],
+            'walletBCH' => $data['bch'],
         ]);
         $user
         ->roles()

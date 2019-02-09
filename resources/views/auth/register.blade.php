@@ -25,35 +25,38 @@
                   </span>
               @endif
               <v-text-field id="password" prepend-icon="lock" name="password" label="Contraseña" type="password"></v-text-field>
-              <v-text-field id="password-confirm" prepend-icon="lock" name="password_confirmation" label="Repite la contraseña" type="password"></v-text-field>
               @if ($errors->has('password'))
                   <span >
                       <strong>{{ $errors->first('password') }}</strong>
                   </span>
               @endif
-              <div class="form-group row">
-                  <div class="col-md-6 offset-md-4">
-                      <div class="form-check">
-                          <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-
-                          <label class="form-check-label" for="remember">
-                              {{ __('Remember Me') }}
-                          </label>
-                      </div>
-                  </div>
-              </div>
+              <v-text-field id="password-confirm" prepend-icon="lock" name="password_confirmation" label="Repite la contraseña" type="password"></v-text-field>
+              @if ($errors->has('password-confirm'))
+                  <span >
+                      <strong>{{ $errors->first('password-confirm') }}</strong>
+                  </span>
+              @endif
+              <v-text-field prepend-icon="account_balance_wallet" name="btc" label="Address de Bitcoin (opcional)" type="text" value=""></v-text-field>
+              @if ($errors->has('walletBTC'))
+                  <span >
+                      <strong>{{ $errors->first('walletBTC') }}</strong>
+                  </span>
+              @endif
+              <v-text-field prepend-icon="account_balance_wallet" name="eth" label="Address de Ethereum (opcional)" type="text" value=""></v-text-field>
+              @if ($errors->has('walletETH'))
+                  <span >
+                      <strong>{{ $errors->first('walletETH') }}</strong>
+                  </span>
+              @endif
+              <v-text-field prepend-icon="account_balance_wallet" name="bch" label="Address de Bitcoin Cash (opcional)" type="text" value=""></v-text-field>
+              @if ($errors->has('walletBCH'))
+                  <span >
+                      <strong>{{ $errors->first('walletBCH') }}</strong>
+                  </span>
+              @endif
+              <v-btn color="primary" type="submit">Registrarse</v-btn>
             </v-form>
           </v-card-text>
-          <v-card-actions>
-            @if (Route::has('password.request'))
-                <a class="btn btn-link" href="{{ route('password.request') }}">
-                    {{ __('Forgot Your Password?') }}
-                </a>
-            @endif
-            <v-spacer></v-spacer>
-            <v-btn color="primary" onclick="event.preventDefault();
-                          document.getElementById('register-form').submit();">Registrarse</v-btn>
-          </v-card-actions>
         </v-card>
       </v-flex>
     </v-layout>

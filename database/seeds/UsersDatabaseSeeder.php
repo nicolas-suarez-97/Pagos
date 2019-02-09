@@ -39,6 +39,10 @@ class UsersDatabaseSeeder extends Seeder
       $user = new User();
       $user->name = 'Aliado';
       $user->email = 'aliado@example.com';
+      $user->walletBTC = '1MoFKJj8DuPuf4HRKzP6UXEtTQA162LgHh';
+      $user->walletETH = '1MoFKJj8DuPuf4HRKzP6UXEtTQA162LgHh';
+      $user->walletBCH = '1MoFKJj8DuPuf4HRKzP6UXEtTQA162LgHh';
+      $user->walletCOL = 'pesos:1MoFKJj8DuPuf4HRKzP6UXEtTQA162LgHh';
       $user->password = Hash::make('secret');
       $user->save();
       $user->roles()->attach($role_aliado);

@@ -30,6 +30,6 @@ class CreateColPesoUserTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('colPeso_user');
+        Schema::dropIfExists('col_peso_user');
     }
 }

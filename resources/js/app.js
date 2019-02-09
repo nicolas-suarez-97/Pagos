@@ -35,7 +35,7 @@ Vue.use(VueQrcodeReader)
  *
  * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
  */
-
+//
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
@@ -50,7 +50,7 @@ Vue.use(VueQrcodeReader)
 //* Recibir                  **
 //* Tranferencias componente **
 //*****************************
-
+Vue.component('ejemplo', './components/RecibirTransferencia.vue')
 Vue.component('recibir-tansfer', {
   template: `
     <div>
@@ -64,6 +64,7 @@ Vue.component('recibir-tansfer', {
   `,
   mounted: function (){
     this.printQr()
+    //this.generateCoin()
   },
   props: ['info-user'],
   data: () => {
@@ -80,7 +81,15 @@ Vue.component('recibir-tansfer', {
           console.log('Error incluyendo y pintando el código qr :'+e);
       }
 
-    }
+    },
+    // generateCoin: function () {
+    //   const cryptoWallets = require('crypto-wallets');
+    //   cryptoWallets.generateWallet('BTC').then(function (w) {
+    //     console.log('Adress: ' + w.address);
+    //     console.log('key: ' + w.privateKey);
+    //   })
+    //
+    // }
   }
 })
 
@@ -104,7 +113,7 @@ Vue.component('enviar-tansfer', {
       </v-btn>
       <span>Leer número de cuenta</span>
     </v-tooltip>
-        <v-text-field prepend-icon="person" name="wallet" class="text-center" label="Wallet" type="text" v-model="coin.wallet"></v-text-field>
+        <v-text-field prepend-icon="account_balance_wallet" name="wallet" class="text-center" label="Wallet" type="text" v-model="coin.wallet"></v-text-field>
         <v-tooltip left>
           <v-btn slot="activator" icon large>
             <v-icon large class="text-info">send</v-icon>
@@ -210,13 +219,39 @@ const app = new Vue({
       'qrcode-drop-zone': VueQrcodeReader.QrcodeDropZone,
       'qrcode-capture': VueQrcodeReader.QrcodeCapture
     },
+    mounted: function (){
+      this.col()
+    },
     data: {
       drawer: null,
       source: null,
       user: {
-        name: 'Ejemplo',
+        name: '',
         publicKey: '',
-        wallet: '1MoFKJj8DuPuf4HRKzP6UXEtTQA162LgHh'
+        wallet: ''
+      }
+    },
+    methods: {
+      getUser: function () {
+        axios.get('api/user').then(function (res) {
+          console.log(res);
+        })
+      },
+      col: function () {
+        var wallet = document.querySelector('#walletCOL');
+        this.user.wallet = wallet.value
+      },
+      btc: function () {
+        var wallet = document.querySelector('#walletBTC');
+        this.user.wallet = wallet.value
+      },
+      eth: function () {
+        var wallet = document.querySelector('#walletETH');
+        this.user.wallet = wallet.value
+      },
+      bch: function () {
+        var wallet = document.querySelector('#walletBCH');
+        this.user.wallet = wallet.value
       }
     }
 });

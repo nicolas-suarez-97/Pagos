@@ -25,7 +25,7 @@
                     </span>
                 @endif
                 <div class="form-group row">
-                    <div class="col-md-6 offset-md-4">
+                    <div class="col-md-6 offset-md-3">
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
 
@@ -35,18 +35,16 @@
                         </div>
                     </div>
                 </div>
+                @if (Route::has('password.request'))
+                    <a class="btn btn-link" href="{{ route('password.request') }}">
+                        {{ __('Forgot Your Password?') }}
+                    </a>
+                @endif
+                <v-spacer>
+                </v-spacer>
+                <v-btn color="primary" type="submit">Acceder</v-btn>
               </v-form>
             </v-card-text>
-            <v-card-actions>
-              @if (Route::has('password.request'))
-                  <a class="btn btn-link" href="{{ route('password.request') }}">
-                      {{ __('Forgot Your Password?') }}
-                  </a>
-              @endif
-              <v-spacer></v-spacer>
-              <v-btn color="primary" onclick="event.preventDefault();
-                            document.getElementById('logout-form').submit();">Acceder</v-btn>
-            </v-card-actions>
           </v-card>
         </v-flex>
       </v-layout>
