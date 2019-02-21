@@ -83,4 +83,10 @@ class UsersController extends Controller
     {
         User::delete($id);
     }
+
+    public function showWithWallet(Request $request)
+    {
+      $wallet = $request->wallet;
+      return User::where('walletCOL', $wallet)->first();
+    }
 }

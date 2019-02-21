@@ -17,6 +17,7 @@ import Vuetify from 'vuetify'
 import VueRouter from 'vue-router'
 import WebFontLoader from 'webfontloader'
 import VueQrcodeReader from 'vue-qrcode-reader'
+const axios = require('axios');
 
 
 Vue.use(Vuex)
@@ -137,6 +138,7 @@ Vue.component('enviar-tansfer', {
       align-center
       >
       <img v-if="coin.url" :src="coin.url" />
+      <p class="headline text-capitalize" v-if="toUser.name">{{toUser.name}}</p>
       <p class="headline text-capitalize">{{coin.name}}</p>
       <p class="subheading text-danger .font-weight-regular.font-italic ">{{ error }}</p>
       <p class="font-weight-regular title">{{ coin.wallet }}</p>
@@ -147,8 +149,9 @@ Vue.component('enviar-tansfer', {
       <span>Leer número de cuenta</span>
     </v-tooltip>
         <v-text-field prepend-icon="account_balance_wallet" name="wallet" class="text-center" label="Wallet" type="text" v-model="coin.wallet"></v-text-field>
+        <v-text-field prepend-icon="account_balance_wallet" name="mount" class="text-center" label="Monto" type="number" v-model="coin.mount"></v-text-field>
         <v-tooltip left>
-          <v-btn slot="activator" icon large>
+          <v-btn slot="activator" @click="getUserWithWallet()" icon large>
             <v-icon large class="text-info">send</v-icon>
           </v-btn>
           <span>Transferir</span>
@@ -185,6 +188,12 @@ Vue.component('enviar-tansfer', {
       coin: {
         name: '',
         url: '',
+        wallet: '',
+        mount: 0
+      },
+      toUser: {
+        id : 0,
+        name: '',
         wallet: ''
       }
     }
@@ -239,6 +248,16 @@ Vue.component('enviar-tansfer', {
         return this.reload()
       }
       return this.camera.active = false
+    },
+    getUserWithWallet: function () {
+      let userData
+      let name = this.toUser.name
+      axios.get('user/showWithWallet?wallet=pesos:' + this.coin.wallet)
+      .then(function (response) {
+        userData = response.data
+        console.log(userData.name)
+         name = userData.name
+      })
     }
   }
 })

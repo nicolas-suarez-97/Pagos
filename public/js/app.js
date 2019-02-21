@@ -82576,6 +82576,9 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
 
 
 
+
+var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+
 Vue.use(vuex__WEBPACK_IMPORTED_MODULE_3__["default"]);
 Vue.use(vue_router__WEBPACK_IMPORTED_MODULE_5__["default"]);
 Vue.use(vuetify__WEBPACK_IMPORTED_MODULE_4___default.a);
@@ -82666,7 +82669,7 @@ Vue.component('recibir-tansfer', {
   }
 });
 Vue.component('enviar-tansfer', {
-  template: "\n    <div>\n    <v-card>\n      <v-card-title>Transferir</v-card-title>\n      <v-card-text\n      v-if=\"!camera.active\"\n      justify-center\n      align-center\n      >\n      <img v-if=\"coin.url\" :src=\"coin.url\" />\n      <p class=\"headline text-capitalize\">{{coin.name}}</p>\n      <p class=\"subheading text-danger .font-weight-regular.font-italic \">{{ error }}</p>\n      <p class=\"font-weight-regular title\">{{ coin.wallet }}</p>\n      <v-tooltip left>\n      <v-btn slot=\"activator\" icon large @click=\"scannerQrSwitch(true)\">\n        <v-icon large >camera</v-icon>\n      </v-btn>\n      <span>Leer n\xFAmero de cuenta</span>\n    </v-tooltip>\n        <v-text-field prepend-icon=\"account_balance_wallet\" name=\"wallet\" class=\"text-center\" label=\"Wallet\" type=\"text\" v-model=\"coin.wallet\"></v-text-field>\n        <v-tooltip left>\n          <v-btn slot=\"activator\" icon large>\n            <v-icon large class=\"text-info\">send</v-icon>\n          </v-btn>\n          <span>Transferir</span>\n        </v-tooltip>\n      </v-card-text>\n      <v-card-text v-else>\n      <qrcode-stream @decode=\"onDecode\" @init=\"onInit\" v-if=\"!camera.destroyed\">\n        <div class=\"loading-indicator\" v-if=\"camera.loading\">\n          Loading...\n        </div>\n      </qrcode-stream>\n        <v-tooltip left>\n          <v-btn slot=\"activator\" icon large>\n            <v-icon large class=\"text-info\" @click=\"scannerQrSwitch(false)\">cancel</v-icon>\n          </v-btn>\n          <span>Cancelar</span>\n        </v-tooltip>\n      </v-card-text>\n    </v-card>\n    </div>\n  ",
+  template: "\n    <div>\n    <v-card>\n      <v-card-title>Transferir</v-card-title>\n      <v-card-text\n      v-if=\"!camera.active\"\n      justify-center\n      align-center\n      >\n      <img v-if=\"coin.url\" :src=\"coin.url\" />\n      <p class=\"headline text-capitalize\" v-if=\"toUser.name\">{{toUser.name}}</p>\n      <p class=\"headline text-capitalize\">{{coin.name}}</p>\n      <p class=\"subheading text-danger .font-weight-regular.font-italic \">{{ error }}</p>\n      <p class=\"font-weight-regular title\">{{ coin.wallet }}</p>\n      <v-tooltip left>\n      <v-btn slot=\"activator\" icon large @click=\"scannerQrSwitch(true)\">\n        <v-icon large >camera</v-icon>\n      </v-btn>\n      <span>Leer n\xFAmero de cuenta</span>\n    </v-tooltip>\n        <v-text-field prepend-icon=\"account_balance_wallet\" name=\"wallet\" class=\"text-center\" label=\"Wallet\" type=\"text\" v-model=\"coin.wallet\"></v-text-field>\n        <v-text-field prepend-icon=\"account_balance_wallet\" name=\"mount\" class=\"text-center\" label=\"Monto\" type=\"number\" v-model=\"coin.mount\"></v-text-field>\n        <v-tooltip left>\n          <v-btn slot=\"activator\" @click=\"getUserWithWallet()\" icon large>\n            <v-icon large class=\"text-info\">send</v-icon>\n          </v-btn>\n          <span>Transferir</span>\n        </v-tooltip>\n      </v-card-text>\n      <v-card-text v-else>\n      <qrcode-stream @decode=\"onDecode\" @init=\"onInit\" v-if=\"!camera.destroyed\">\n        <div class=\"loading-indicator\" v-if=\"camera.loading\">\n          Loading...\n        </div>\n      </qrcode-stream>\n        <v-tooltip left>\n          <v-btn slot=\"activator\" icon large>\n            <v-icon large class=\"text-info\" @click=\"scannerQrSwitch(false)\">cancel</v-icon>\n          </v-btn>\n          <span>Cancelar</span>\n        </v-tooltip>\n      </v-card-text>\n    </v-card>\n    </div>\n  ",
   mounted: function mounted() {},
   props: ['info-user'],
   data: function data() {
@@ -82681,6 +82684,12 @@ Vue.component('enviar-tansfer', {
       coin: {
         name: '',
         url: '',
+        wallet: '',
+        mount: 0
+      },
+      toUser: {
+        id: 0,
+        name: '',
         wallet: ''
       }
     };
@@ -82790,6 +82799,15 @@ Vue.component('enviar-tansfer', {
       }
 
       return this.camera.active = false;
+    },
+    getUserWithWallet: function getUserWithWallet() {
+      var userData;
+      var name = this.toUser.name;
+      axios.get('user/showWithWallet?wallet=pesos:' + this.coin.wallet).then(function (response) {
+        userData = response.data;
+        console.log(userData.name);
+        name = userData.name;
+      });
     }
   }
 });
