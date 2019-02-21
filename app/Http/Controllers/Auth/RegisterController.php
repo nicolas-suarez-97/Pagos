@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\User;
 use App\Role;
+use App\ColPeso;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -71,10 +72,15 @@ class RegisterController extends Controller
             'walletBTC' => $data['btc'],
             'walletETH' => $data['eth'],
             'walletBCH' => $data['bch'],
+            'walletCOL' => 'pesos:'.Hash::make(str_random(10)),
         ]);
         $user
         ->roles()
         ->attach(Role::where('name', 'user')->first());
+        $mount = new ColPeso();
+        $mount->mount = 0;
+        $mount->user_id = $user->id;
+        $mount->save();
         return $user;
     }
 }

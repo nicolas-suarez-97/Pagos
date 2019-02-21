@@ -82603,9 +82603,9 @@ Vue.use(vue_qrcode_reader__WEBPACK_IMPORTED_MODULE_7__["default"]);
 
 Vue.component('ejemplo', './components/RecibirTransferencia.vue');
 Vue.component('recibir-tansfer', {
-  template: "\n    <div>\n      <v-card>\n        <v-card-text>\n          <canvas id=\"canvasQR\" width=\"200\" height=\"200\" class=\"img-responsive center-block img-thumbnail text-center\"></canvas>\n          <h6>{{ infoUser.wallet }}</h6>\n        </v-card-text>\n      </v-card>\n    </div>\n  ",
+  template: "\n    <div>\n    <v-btn color=\"primary\" @click=\"col()\" type=\"text\">Pesos</v-btn>\n    <v-btn color=\"primary\" @click=\"btc()\" type=\"text\">Bitcoin</v-btn>\n    <v-btn color=\"primary\" @click=\"eth()\" type=\"text\">Ethereum</v-btn>\n    <v-btn color=\"primary\" @click=\"bch()\" type=\"text\">Bitcoin Cash</v-btn>\n      <v-card>\n        <v-card-text>\n          <canvas id=\"canvasQR\" width=\"200\" height=\"200\" class=\"img-responsive center-block img-thumbnail text-center\"></canvas>\n          <h6>{{ infoUser.wallet }}</h6>\n        </v-card-text>\n      </v-card>\n    </div>\n  ",
   mounted: function mounted() {
-    this.printQr(); //this.generateCoin()
+    this.col(); //this.generateCoin()
   },
   props: ['info-user'],
   data: function data() {
@@ -82615,15 +82615,45 @@ Vue.component('recibir-tansfer', {
   },
   methods: {
     printQr: function printQr() {
+      var canvas = $('#canvasQR');
+      var canvasRepli = document.querySelector('#canvasQR');
+      var context = canvasRepli.getContext("2d");
+      context.clearRect(0, 0, canvas.width, canvas.height);
+
       try {
         var qrcode = __webpack_require__(/*! ./libs/QRJquery.js */ "./resources/js/libs/QRJquery.js");
 
-        $('#canvasQR').qrcode({
+        canvas.qrcode({
           'text': this.infoUser.wallet
         });
       } catch (e) {
         console.log('Error incluyendo y pintando el código qr :' + e);
       }
+    },
+    col: function col() {
+      var wallet = document.querySelector('#walletCOL');
+      wallet = this.quiteDosPuntos(wallet.value);
+      this.infoUser.wallet = wallet[1];
+      this.printQr();
+    },
+    btc: function btc() {
+      var wallet = document.querySelector('#walletBTC');
+      this.infoUser.wallet = wallet.value;
+      this.printQr();
+    },
+    eth: function eth() {
+      var wallet = document.querySelector('#walletETH');
+      this.infoUser.wallet = wallet.value;
+      this.printQr();
+    },
+    bch: function bch() {
+      var wallet = document.querySelector('#walletBCH');
+      this.infoUser.wallet = wallet.value;
+      this.printQr();
+    },
+    quiteDosPuntos: function quiteDosPuntos(s) {
+      var separador = ':';
+      return s.split(separador);
     } // generateCoin: function () {
     //   const cryptoWallets = require('crypto-wallets');
     //   cryptoWallets.generateWallet('BTC').then(function (w) {
@@ -82776,6 +82806,7 @@ var app = new Vue({
   data: {
     drawer: null,
     source: null,
+    printer: false,
     user: {
       name: '',
       publicKey: '',
@@ -82788,21 +82819,28 @@ var app = new Vue({
         console.log(res);
       });
     },
+    printQr: function printQr() {
+      this.printer = true;
+    },
     col: function col() {
       var wallet = document.querySelector('#walletCOL');
       this.user.wallet = wallet.value;
+      this.printQr();
     },
     btc: function btc() {
       var wallet = document.querySelector('#walletBTC');
       this.user.wallet = wallet.value;
+      this.printQr();
     },
     eth: function eth() {
       var wallet = document.querySelector('#walletETH');
       this.user.wallet = wallet.value;
+      this.printQr();
     },
     bch: function bch() {
       var wallet = document.querySelector('#walletBCH');
       this.user.wallet = wallet.value;
+      this.printQr();
     }
   }
 });

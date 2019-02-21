@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'walletBTC', 'walletETH', 'walletBCH',
+        'name', 'email', 'password', 'walletBTC', 'walletETH', 'walletBCH', 'walletCOL'
     ];
 
     /**
@@ -85,9 +85,7 @@ class User extends Authenticatable
 
   public function ColPesos()
   {
-    return $this
-      ->belongsToMany('App\ColPeso')
-      ->withTimestamps();
+    return $this->hasMany('App\ColPeso', 'user_id');
   }
 
   public function coinpayment_transactions(){

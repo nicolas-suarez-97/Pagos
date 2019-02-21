@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\User;
 
 class HomeController extends Controller
 {
@@ -26,8 +27,11 @@ class HomeController extends Controller
         return view('home');
     }
 
-    public function recibir()
+    public function recibir(Request $request)
     {
-        return view('home');
+      $user = User::where('name', $request->user()->name);
+        return view('recibir',[
+          'user' => $user
+        ]);
     }
 }

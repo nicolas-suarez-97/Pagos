@@ -83,7 +83,7 @@
                   <v-icon>get_app</v-icon>
                 </v-list-tile-action>
                 <v-list-tile-content>
-                  <v-list-tile-title><a href="{{route('home')}}">Recibir Transferencia</a></v-list-tile-title>
+                  <v-list-tile-title><a href="{{route('recibir')}}">Recibir Transferencia</a></v-list-tile-title>
                 </v-list-tile-content>
               </v-list-tile>
             @endif

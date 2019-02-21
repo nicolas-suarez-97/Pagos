@@ -13,14 +13,17 @@ class colPesosTableSeeder extends Seeder
     {
         $mount = new ColPeso();
         $mount->mount = 100000;
+        $mount->user_id = 1;
         $mount->save();
 
         $mount = new ColPeso();
         $mount->mount = 0;
+        $mount->user_id = 2;
         $mount->save();
 
         $mount = new ColPeso();
         $mount->mount = 0;
+        $mount->user_id = 3;
         $mount->save();
     }
 }

@@ -13,10 +13,6 @@
     <h2>Transferir a:</h2>
     <h2 class="text-info">{{Auth::user()->name}}</h2>
     <div>
-      <v-btn color="primary" @click="col()" type="text">Pesos</v-btn>
-      <v-btn color="primary" @click="btc()" type="text">Bitcoin</v-btn>
-      <v-btn color="primary" @click="eth()" type="text">Ethereum</v-btn>
-      <v-btn color="primary" @click="bch()" type="text">Bitcoin Cash</v-btn>
       <recibir-tansfer :info-user="user"/>
     </div>
     <input type="hidden" name="walletCOL" id="walletCOL" value="{{Auth::user()->walletCOL}}">

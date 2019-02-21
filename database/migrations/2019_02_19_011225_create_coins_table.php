@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateColPesosTable extends Migration
+class CreateCoinsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,8 @@ class CreateColPesosTable extends Migration
      */
     public function up()
     {
-        Schema::create('col_pesos', function (Blueprint $table) {
+        Schema::create('coins', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('mount');
-            $table->integer('user_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });
     }
@@ -29,6 +26,6 @@ class CreateColPesosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('col_pesos');
+        Schema::dropIfExists('coins');
     }
 }
