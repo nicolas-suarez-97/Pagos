@@ -25,6 +25,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
   ]);
 });
 
+
 Route::middleware(['auth', 'role:aliado'])->group(function () {
   Route::resource('users','UsersController')->only([
       'index', 'show'
@@ -35,4 +36,8 @@ Route::middleware(['auth', 'role:user'])->group(function () {
   Route::resource('users','UsersController')->only([
       'index', 'show'
   ]);
+
 });
+Route::resource('mount','ColPesosController')->only([
+    'index', 'show', 'store', 'update', 'destroy'
+]);
