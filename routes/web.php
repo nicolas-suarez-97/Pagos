@@ -20,5 +20,3 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/recibir', 'HomeController@recibir')->name('recibir');
-
-Route::get('user/showWithWallet', 'UsersController@showWithWallet');

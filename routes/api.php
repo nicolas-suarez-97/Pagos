@@ -41,3 +41,5 @@ Route::middleware(['auth', 'role:user'])->group(function () {
 Route::resource('mount','ColPesosController')->only([
     'index', 'show', 'store', 'update', 'destroy'
 ]);
+
+Route::get('user/showWithWallet', 'UsersController@showWithWallet');

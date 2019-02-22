@@ -82604,55 +82604,70 @@ Vue.use(vue_qrcode_reader__WEBPACK_IMPORTED_MODULE_7__["default"]);
 //* Tranferencias componente **
 //*****************************
 
-Vue.component('ejemplo', './components/RecibirTransferencia.vue');
 Vue.component('recibir-tansfer', {
   template: "\n    <div>\n    <v-btn color=\"primary\" @click=\"col()\" type=\"text\">Pesos</v-btn>\n    <v-btn color=\"primary\" @click=\"btc()\" type=\"text\">Bitcoin</v-btn>\n    <v-btn color=\"primary\" @click=\"eth()\" type=\"text\">Ethereum</v-btn>\n    <v-btn color=\"primary\" @click=\"bch()\" type=\"text\">Bitcoin Cash</v-btn>\n      <v-card>\n        <v-card-text>\n          <canvas id=\"canvasQR\" width=\"200\" height=\"200\" class=\"img-responsive center-block img-thumbnail text-center\"></canvas>\n          <h6>{{ infoUser.wallet }}</h6>\n        </v-card-text>\n      </v-card>\n    </div>\n  ",
   mounted: function mounted() {
     this.col(); //this.generateCoin()
+
+    this.infoUserr = this.infoUser;
   },
   props: ['info-user'],
   data: function data() {
     return {
-      url: 'http://localhost:8000/'
+      url: 'http://localhost:8000/',
+      infoUserr: {}
     };
   },
   methods: {
-    printQr: function printQr() {
-      var canvas = $('#canvasQR');
-      var canvasRepli = document.querySelector('#canvasQR');
-      var context = canvasRepli.getContext("2d");
-      context.clearRect(0, 0, canvas.width, canvas.height);
+    printQr: function printQr(v) {
+      var canvas;
 
-      try {
-        var qrcode = __webpack_require__(/*! ./libs/QRJquery.js */ "./resources/js/libs/QRJquery.js");
+      if (v) {
+        canvas = $('#canvasQR');
 
-        canvas.qrcode({
-          'text': this.infoUser.wallet
-        });
-      } catch (e) {
-        console.log('Error incluyendo y pintando el código qr :' + e);
+        try {
+          var qrcode = __webpack_require__(/*! ./libs/QRJquery.js */ "./resources/js/libs/QRJquery.js");
+
+          canvas.qrcode({
+            'text': v
+          });
+        } catch (e) {
+          console.log('Error incluyendo y pintando el código qr :' + e);
+        }
+      } else {
+        this.infoUser.wallet = 'Wallet no asignada';
       }
     },
     col: function col() {
-      var wallet = document.querySelector('#walletCOL');
-      wallet = this.quiteDosPuntos(wallet.value);
-      this.infoUser.wallet = wallet[1];
-      this.printQr();
+      var wallet = {
+        real: '',
+        address: '',
+        name: '',
+        element: null,
+        arrays: []
+      };
+      wallet.element = document.querySelector('#walletCOL');
+      wallet.real = wallet.element.value;
+      wallet.arrays = this.quiteDosPuntos(wallet.real);
+      wallet.address = wallet.arrays[1];
+      wallet.name = wallet.arrays[0];
+      this.infoUser.wallet = wallet.address;
+      this.printQr(wallet.real);
     },
     btc: function btc() {
       var wallet = document.querySelector('#walletBTC');
       this.infoUser.wallet = wallet.value;
-      this.printQr();
+      this.printQr(wallet.value);
     },
     eth: function eth() {
       var wallet = document.querySelector('#walletETH');
       this.infoUser.wallet = wallet.value;
-      this.printQr();
+      this.printQr(wallet.value);
     },
     bch: function bch() {
       var wallet = document.querySelector('#walletBCH');
       this.infoUser.wallet = wallet.value;
-      this.printQr();
+      this.printQr(wallet.value);
     },
     quiteDosPuntos: function quiteDosPuntos(s) {
       var separador = ':';
@@ -82669,7 +82684,7 @@ Vue.component('recibir-tansfer', {
   }
 });
 Vue.component('enviar-tansfer', {
-  template: "\n    <div>\n    <v-card>\n      <v-card-title>Transferir</v-card-title>\n      <v-card-text\n      v-if=\"!camera.active\"\n      justify-center\n      align-center\n      >\n      <img v-if=\"coin.url\" :src=\"coin.url\" />\n      <p class=\"headline text-capitalize\" v-if=\"toUser.name\">{{toUser.name}}</p>\n      <p class=\"headline text-capitalize\">{{coin.name}}</p>\n      <p class=\"subheading text-danger .font-weight-regular.font-italic \">{{ error }}</p>\n      <p class=\"font-weight-regular title\">{{ coin.wallet }}</p>\n      <v-tooltip left>\n      <v-btn slot=\"activator\" icon large @click=\"scannerQrSwitch(true)\">\n        <v-icon large >camera</v-icon>\n      </v-btn>\n      <span>Leer n\xFAmero de cuenta</span>\n    </v-tooltip>\n        <v-text-field prepend-icon=\"account_balance_wallet\" name=\"wallet\" class=\"text-center\" label=\"Wallet\" type=\"text\" v-model=\"coin.wallet\"></v-text-field>\n        <v-text-field prepend-icon=\"account_balance_wallet\" name=\"mount\" class=\"text-center\" label=\"Monto\" type=\"number\" v-model=\"coin.mount\"></v-text-field>\n        <v-tooltip left>\n          <v-btn slot=\"activator\" @click=\"getUserWithWallet()\" icon large>\n            <v-icon large class=\"text-info\">send</v-icon>\n          </v-btn>\n          <span>Transferir</span>\n        </v-tooltip>\n      </v-card-text>\n      <v-card-text v-else>\n      <qrcode-stream @decode=\"onDecode\" @init=\"onInit\" v-if=\"!camera.destroyed\">\n        <div class=\"loading-indicator\" v-if=\"camera.loading\">\n          Loading...\n        </div>\n      </qrcode-stream>\n        <v-tooltip left>\n          <v-btn slot=\"activator\" icon large>\n            <v-icon large class=\"text-info\" @click=\"scannerQrSwitch(false)\">cancel</v-icon>\n          </v-btn>\n          <span>Cancelar</span>\n        </v-tooltip>\n      </v-card-text>\n    </v-card>\n    </div>\n  ",
+  template: "\n    <div>\n    <v-card>\n      <v-card-title>Transferir</v-card-title>\n      <v-card-text\n      v-if=\"!camera.active\"\n      justify-center\n      align-center\n      >\n      <img v-if=\"coin.url\" :src=\"coin.url\" />\n      <p class=\"headline text-capitalize text-info\" v-if=\"toUser.name\">{{toUser.name}}</p>\n      <p class=\"headline text-capitalize\">{{coin.name}}</p>\n      <p class=\"subheading text-danger .font-weight-regular.font-italic \">{{ error }}</p>\n      <p class=\"font-weight-regular title\">{{ coin.wallet }}</p>\n      <v-tooltip left>\n      <v-btn slot=\"activator\" icon large @click=\"scannerQrSwitch(true)\">\n        <v-icon large >camera</v-icon>\n      </v-btn>\n      <span>Leer n\xFAmero de cuenta</span>\n    </v-tooltip>\n        <v-text-field prepend-icon=\"account_balance_wallet\" name=\"wallet\" class=\"text-center\" label=\"Wallet\" type=\"text\" v-model=\"coin.wallet\"></v-text-field>\n        <v-text-field prepend-icon=\"account_balance_wallet\" name=\"mount\" class=\"text-center\" label=\"Monto\" type=\"number\" v-model=\"coin.mount\"></v-text-field>\n        <v-tooltip left>\n          <v-btn slot=\"activator\" @click=\"sendTransation()\" icon large>\n            <v-icon large class=\"text-info\">send</v-icon>\n          </v-btn>\n          <span>Transferir</span>\n        </v-tooltip>\n      </v-card-text>\n      <v-card-text v-else>\n      <qrcode-stream @decode=\"onDecode\" @init=\"onInit\" v-if=\"!camera.destroyed\">\n        <div class=\"loading-indicator\" v-if=\"camera.loading\">\n          Loading...\n        </div>\n      </qrcode-stream>\n        <v-tooltip left>\n          <v-btn slot=\"activator\" icon large>\n            <v-icon large class=\"text-info\" @click=\"scannerQrSwitch(false)\">cancel</v-icon>\n          </v-btn>\n          <span>Cancelar</span>\n        </v-tooltip>\n      </v-card-text>\n    </v-card>\n    </div>\n  ",
   mounted: function mounted() {},
   props: ['info-user'],
   data: function data() {
@@ -82696,11 +82711,22 @@ Vue.component('enviar-tansfer', {
   },
   methods: {
     onDecode: function onDecode(result) {
+      var coinName;
+      var coinWallet;
       this.result = this.quiteDosPuntos(result);
-      this.coin.name = this.result[0];
-      this.coin.wallet = this.result[1];
+      coinName = this.result[0];
+      coinWallet = this.result[1];
+
+      if (coinName == 'pesos') {
+        this.coin.name = coinName;
+        this.coin.wallet = coinWallet;
+        this.coin.name = this.noSpace(this.coin.name);
+        this.getUserWithWallet();
+      } else {
+        this.coin.name = 'Dirección de ' + coinName + ' no soportada';
+      }
+
       this.camera.active = false;
-      this.coin.name = this.noSpace(this.coin.name);
     },
     noSpace: function noSpace(s) {
       return s.replace(/ /g, "");
@@ -82801,13 +82827,19 @@ Vue.component('enviar-tansfer', {
       return this.camera.active = false;
     },
     getUserWithWallet: function getUserWithWallet() {
+      var _this = this;
+
       var userData;
-      var name = this.toUser.name;
-      axios.get('user/showWithWallet?wallet=pesos:' + this.coin.wallet).then(function (response) {
-        userData = response.data;
-        console.log(userData.name);
-        name = userData.name;
+      var url = 'api/user/showWithWallet?wallet=pesos:' + this.coin.wallet;
+      axios.get(url).then(function (response) {
+        _this.toUser.id = response.data.id;
+        _this.toUser.name = response.data.name;
+        _this.toUser.wallet = response.data.walletCOL;
       });
+    },
+    sendTransation: function sendTransation() {
+      console.log('enviando a ' + this.toUser.name);
+      console.log(this.toUser.id);
     }
   }
 });

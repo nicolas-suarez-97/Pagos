@@ -51,7 +51,6 @@ Vue.use(VueQrcodeReader)
 //* Recibir                  **
 //* Tranferencias componente **
 //*****************************
-Vue.component('ejemplo', './components/RecibirTransferencia.vue')
 Vue.component('recibir-tansfer', {
   template: `
     <div>
@@ -70,47 +69,62 @@ Vue.component('recibir-tansfer', {
   mounted: function (){
     this.col()
     //this.generateCoin()
+    this.infoUserr = this.infoUser
   },
   props: ['info-user'],
   data: () => {
     return {
       url: 'http://localhost:8000/',
+      infoUserr: {}
     }
   },
   methods: {
-    printQr: function (){
-      let canvas = $('#canvasQR')
-      let canvasRepli = document.querySelector('#canvasQR')
-      let context = canvasRepli.getContext("2d")
-      context.clearRect(0, 0, canvas.width, canvas.height)
-      try {
-        const qrcode = require('./libs/QRJquery.js');
-        canvas.qrcode({'text':this.infoUser.wallet});
-      } catch (e) {
-          console.log('Error incluyendo y pintando el código qr :'+e);
+    printQr: function (v){
+      let canvas
+      if (v) {
+        canvas = $('#canvasQR')
+        try {
+          const qrcode = require('./libs/QRJquery.js');
+          canvas.qrcode({'text':v});
+        } catch (e) {
+            console.log('Error incluyendo y pintando el código qr :'+e);
+        }
+      }else {
+        this.infoUser.wallet = 'Wallet no asignada'
       }
+
 
     },
     col: function () {
-      var wallet = document.querySelector('#walletCOL');
-      wallet = this.quiteDosPuntos(wallet.value)
-      this.infoUser.wallet = wallet[1]
-      this.printQr()
+      let wallet = {
+        real: '',
+        address: '',
+        name: '',
+        element: null,
+        arrays: []
+      }
+      wallet.element = document.querySelector('#walletCOL');
+      wallet.real = wallet.element.value
+      wallet.arrays = this.quiteDosPuntos(wallet.real)
+      wallet.address = wallet.arrays[1]
+      wallet.name = wallet.arrays[0]
+      this.infoUser.wallet = wallet.address
+      this.printQr(wallet.real)
     },
     btc: function () {
       var wallet = document.querySelector('#walletBTC');
       this.infoUser.wallet = wallet.value
-      this.printQr()
+      this.printQr(wallet.value)
     },
     eth: function () {
       var wallet = document.querySelector('#walletETH');
       this.infoUser.wallet = wallet.value
-      this.printQr()
+      this.printQr(wallet.value)
     },
     bch: function () {
       var wallet = document.querySelector('#walletBCH');
       this.infoUser.wallet = wallet.value
-      this.printQr()
+      this.printQr(wallet.value)
     },
     quiteDosPuntos: function (s) {
       var separador = ':'
@@ -138,7 +152,7 @@ Vue.component('enviar-tansfer', {
       align-center
       >
       <img v-if="coin.url" :src="coin.url" />
-      <p class="headline text-capitalize" v-if="toUser.name">{{toUser.name}}</p>
+      <p class="headline text-capitalize text-info" v-if="toUser.name">{{toUser.name}}</p>
       <p class="headline text-capitalize">{{coin.name}}</p>
       <p class="subheading text-danger .font-weight-regular.font-italic ">{{ error }}</p>
       <p class="font-weight-regular title">{{ coin.wallet }}</p>
@@ -151,7 +165,7 @@ Vue.component('enviar-tansfer', {
         <v-text-field prepend-icon="account_balance_wallet" name="wallet" class="text-center" label="Wallet" type="text" v-model="coin.wallet"></v-text-field>
         <v-text-field prepend-icon="account_balance_wallet" name="mount" class="text-center" label="Monto" type="number" v-model="coin.mount"></v-text-field>
         <v-tooltip left>
-          <v-btn slot="activator" @click="getUserWithWallet()" icon large>
+          <v-btn slot="activator" @click="sendTransation()" icon large>
             <v-icon large class="text-info">send</v-icon>
           </v-btn>
           <span>Transferir</span>
@@ -200,11 +214,22 @@ Vue.component('enviar-tansfer', {
   },
   methods: {
     onDecode (result) {
+      let coinName
+      let coinWallet
       this.result = this.quiteDosPuntos(result)
-      this.coin.name = this.result[0]
-      this.coin.wallet = this.result[1]
+      coinName = this.result[0]
+      coinWallet = this.result[1]
+      if (coinName == 'pesos') {
+        this.coin.name = coinName
+        this.coin.wallet = coinWallet
+        this.coin.name = this.noSpace(this.coin.name)
+        this.getUserWithWallet()
+      }else {
+        this.coin.name = 'Dirección de ' + coinName + ' no soportada'
+      }
+
       this.camera.active = false
-      this.coin.name = this.noSpace(this.coin.name)
+
     },
     noSpace: function (s) {
       return s.replace(/ /g, "")
@@ -251,13 +276,16 @@ Vue.component('enviar-tansfer', {
     },
     getUserWithWallet: function () {
       let userData
-      let name = this.toUser.name
-      axios.get('user/showWithWallet?wallet=pesos:' + this.coin.wallet)
-      .then(function (response) {
-        userData = response.data
-        console.log(userData.name)
-         name = userData.name
+      let url = 'api/user/showWithWallet?wallet=pesos:' + this.coin.wallet
+      axios.get(url).then(response => {
+        this.toUser.id = response.data.id
+        this.toUser.name = response.data.name
+        this.toUser.wallet = response.data.walletCOL
       })
+    },
+    sendTransation: function () {
+      console.log('enviando a ' + this.toUser.name);
+      console.log(this.toUser.id);
     }
   }
 })
@@ -269,7 +297,7 @@ const app = new Vue({
     components: {
       'qrcode-stream': VueQrcodeReader.QrcodeStream,
       'qrcode-drop-zone': VueQrcodeReader.QrcodeDropZone,
-      'qrcode-capture': VueQrcodeReader.QrcodeCapture
+      'qrcode-capture': VueQrcodeReader.QrcodeCapture,
     },
     mounted: function (){
       this.col()

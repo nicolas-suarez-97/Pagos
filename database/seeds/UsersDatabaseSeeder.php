@@ -28,6 +28,10 @@ class UsersDatabaseSeeder extends Seeder
       $user = new User();
       $user->name = 'Admin';
       $user->email = 'admin@example.com';
+      $user->walletBTC = '1MoFKJj8DuPu14HRKzP6UXEtTQA162LgHh';
+      $user->walletETH = '1MoFKJj8euPue4HRKzP6UXEtTQA162LgHh';
+      $user->walletBCH = '1MoFKJj8FuPu74HRKzP6UXEtTQA162LgHh';
+      $user->walletCOL = 'pesos:'.Hash::make(str_random(10));
       $user->password = Hash::make('secret');
       $user->save();
       $user->roles()->attach($role_admin);
@@ -36,9 +40,9 @@ class UsersDatabaseSeeder extends Seeder
       $user->name = 'Aliado';
       $user->email = 'aliado@example.com';
       $user->walletBTC = '1MoFKJj8DuPuf4HRKzP6UXEtTQA162LgHh';
-      $user->walletETH = '1MoFKJj8DuPuf4HRKzP6UXEtTQA162LgHh';
-      $user->walletBCH = '1MoFKJj8DuPuf4HRKzP6UXEtTQA162LgHh';
-      $user->walletCOL = 'pesos:1MoFKJj8DuPuf4HRKzP6UXEtTQA162LgHh';
+      $user->walletETH = '1MoFKJj8euPuf4HRKzP6UXEtTQA162LgHh';
+      $user->walletBCH = '1MoFKJj8FuPuf4HRKzP6UXEtTQA162LgHh';
+      $user->walletCOL = 'pesos:'.Hash::make(str_random(10));
       $user->password = Hash::make('secret');
       $user->save();
       $user->roles()->attach($role_aliado);
@@ -46,6 +50,10 @@ class UsersDatabaseSeeder extends Seeder
       $user = new User();
       $user->name = 'User';
       $user->email = 'user@example.com';
+      $user->walletBTC = '1MoFKJj8DuPuf4HwKzP6UXEtTQA162LgHh';
+      $user->walletETH = '1MoFKJj8euPuf4HhKzP6UXEtTQA162LgHh';
+      $user->walletBCH = '1MoFKJj8FuPuf4HoKzP6UXEtTQA162LgHh';
+      $user->walletCOL = 'pesos:'.Hash::make(str_random(10));
       $user->password = Hash::make('secret');
       $user->save();
       $user->roles()->attach($role_user);

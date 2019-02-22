@@ -22,7 +22,7 @@ class CreateUsersTable extends Migration
             $table->text('walletBTC')->nullable();
             $table->text('walletETH')->nullable();
             $table->text('walletBCH')->nullable();
-            $table->text('walletCOL')->nullable();
+            $table->string('walletCOL')->unique();
             $table->rememberToken();
             $table->timestamps();
         });
