@@ -18,6 +18,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::resource('transacciones', 'TransationsController');
+Route::resource('colpeso', 'ColPesosController')->only([
+    'index', 'show', 'store', 'update', 'destroy'
+]);
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
   Route::resource('users','UsersController')->only([

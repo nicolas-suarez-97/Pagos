@@ -284,7 +284,17 @@ Vue.component('enviar-tansfer', {
       })
     },
     sendTransation: function () {
+      let url = 'api/colpeso/'
       console.log('enviando a ' + this.toUser.name);
+      axios.put(url + this.toUser.id, {
+        mount : this.coin.mount,
+      }).then( res => {
+        console.log(res);
+      })
+      .catch(function (error) {
+        // handle error
+        console.log(error);
+      })
       console.log(this.toUser.id);
     }
   }

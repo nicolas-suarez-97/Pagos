@@ -69,7 +69,15 @@ class ColPesosController extends Controller
      */
     public function update(Request $request, $id)
     {
-        return ColPeso::update($id, $request);
+        return $request->user();
+        $colPeso = ColPeso::where('user_id', $id)->first();
+        $user = $request->user();
+        $colPesoUser = ColPeso::find($user->id);
+        if ($colPesoUser->mount < $request->input('mount')) {
+          return 'Fondos Insuficientes';
+        }
+        $colPeso->update($request->all());
+        return 'Transacción realizada';
     }
 
     /**

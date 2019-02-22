@@ -6,7 +6,7 @@
   {{-- @foreach ($user->transations as $transation)
     <h2 class="h3 text-info">{{$transation->mount}}</h2>
   @endforeach --}}
-  <h2 class="h3 text-info" id="userMount">{{Auth::user()->ColPesos[0]->mount}}</h2>
+  <h2 class="h3 text-info" id="userMount">${{Auth::user()->ColPesos[0]->mount}}</h2>
   <div>
     <recibir-tansfer v-if="printer" :info-user="user"/>
   </div>
