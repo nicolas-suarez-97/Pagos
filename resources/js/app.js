@@ -60,71 +60,100 @@ Vue.component('recibir-tansfer', {
     <v-btn color="primary" @click="bch()" type="text">Bitcoin Cash</v-btn>
       <v-card>
         <v-card-text>
-          <canvas id="canvasQR" width="200" height="200" class="img-responsive center-block img-thumbnail text-center"></canvas>
-          <h6>{{ infoUser.wallet }}</h6>
+          <h6 v-if="wallet.address">{{ wallet.address }}</h6>
+          <div class="qr-container"></div>
         </v-card-text>
       </v-card>
     </div>
   `,
   mounted: function (){
-    this.col()
+    let info = this.infoUser
+    setTimeout(this.col(), 3000)
     //this.generateCoin()
-    this.infoUserr = this.infoUser
+    //this.infoUserr = this.infoUser
   },
   props: ['info-user'],
   data: () => {
     return {
       url: 'http://localhost:8000/',
-      infoUserr: {}
+      wallet: {
+        name: '',
+        address: ''
+      }
     }
   },
   methods: {
     printQr: function (v){
+      const qrcode = require('./libs/QRJquery.js');
       let canvas
-      if (v) {
-        canvas = $('#canvasQR')
-        try {
-          const qrcode = require('./libs/QRJquery.js');
-          canvas.qrcode({'text':v});
-        } catch (e) {
-            console.log('Error incluyendo y pintando el código qr :'+e);
+      let canvasContainer
+      let createCanvas
+      if (($('#canvasQR')).length == 0) {
+        if (v) {
+          canvasContainer = document.querySelector('.qr-container')
+          createCanvas = document.createElement('div')
+          createCanvas.innerHTML = '<canvas id="canvasQR" width="200" height="200" class="img-responsive center-block img-thumbnail text-center">Tu navegador no soporta canvas</canvas>'
+          this.addControll(canvasContainer, createCanvas)
+          canvas = $('#canvasQR')
+          try {
+            canvas.qrcode({'text':v});
+          } catch (e) {
+              console.log('Error incluyendo y pintando el código qr :'+e);
+          }
+        }else {
+          //this.infoUser.wallet = 'Wallet no asignada'
         }
-      }else {
-        this.infoUser.wallet = 'Wallet no asignada'
+      } else {
+
+        console.log('quitar elemento');
+
+        if (v) {
+          canvasContainer = document.querySelector('.qr-container')
+          createCanvas = document.createElement('div')
+          createCanvas.innerHTML = '<canvas id="canvasQR" width="200" height="200" class="img-responsive center-block img-thumbnail text-center">Tu navegador no soporta canvas</canvas>'
+          this.addControll(canvasContainer, createCanvas)
+          canvas = $('#canvasQR')
+          try {
+            canvas.qrcode({'text':v});
+          } catch (e) {
+              console.log('Error incluyendo y pintando el código qr :'+e);
+          }
+        }else {
+          //this.infoUser.wallet = 'Wallet no asignada'
+        }
       }
-
-
+    },
+    addControll: function (e,i) {
+        if(e.nextSibling){
+            e.parentNode.insertBefore(i,e.nextSibling);
+        } else {
+            e.parentNode.appendChild(i);
+        }
     },
     col: function () {
       let wallet = {
-        real: '',
         address: '',
         name: '',
-        element: null,
         arrays: []
       }
-      wallet.element = document.querySelector('#walletCOL');
-      wallet.real = wallet.element.value
-      wallet.arrays = this.quiteDosPuntos(wallet.real)
+      wallet.arrays = this.quiteDosPuntos(this.infoUser.walletCOL)
       wallet.address = wallet.arrays[1]
       wallet.name = wallet.arrays[0]
-      this.infoUser.wallet = wallet.address
-      this.printQr(wallet.real)
+      this.wallet.address = wallet.address
+      this.wallet.name = wallet.name
+      this.printQr(this.infoUser.walletCOL)
     },
     btc: function () {
-      var wallet = document.querySelector('#walletBTC');
-      this.infoUser.wallet = wallet.value
-      this.printQr(wallet.value)
+      this.wallet.address = this.infoUser.walletBTC
+      this.printQr(this.infoUser.walletBTC)
     },
     eth: function () {
-      var wallet = document.querySelector('#walletETH');
-      this.infoUser.wallet = wallet.value
-      this.printQr(wallet.value)
+      this.wallet.address = this.infoUser.walletETH
+      this.printQr(this.infoUser.walletETH)
     },
     bch: function () {
-      var wallet = document.querySelector('#walletBCH');
-      this.infoUser.wallet = wallet.value
-      this.printQr(wallet.value)
+      this.wallet.address = this.infoUser.walletBCH
+      this.printQr(this.infoUser.walletBCH)
     },
     quiteDosPuntos: function (s) {
       var separador = ':'
@@ -315,7 +344,7 @@ const app = new Vue({
       this.getUser()
     },
     mounted: function (){
-      this.col()
+      //this.col()
     },
     data: {
       drawer: null,
