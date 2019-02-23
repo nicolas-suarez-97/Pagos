@@ -8,6 +8,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'Paga todo') }}</title>
+    <link rel="shortcut icon" href="favicon.png">
 
 
     <!-- Fonts -->
@@ -127,7 +128,7 @@
         <v-toolbar color="indigo" dark fixed app>
           <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
           <v-toolbar-title>
-              {{ config('app.name', 'Laravel') }}
+            <img src="{{ asset('logo.png') }}" alt="{{ config('app.name', 'Laravel') }}" id="logo">
           </v-toolbar-title>
         </v-toolbar>
         <v-content>

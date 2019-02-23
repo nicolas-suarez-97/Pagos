@@ -10500,3 +10500,8 @@ a.text-dark:focus {
   text-decoration: none;
 }
 
+#logo {
+  width: 3.5em;
+  margin-bottom: 0.5em;
+}
+
