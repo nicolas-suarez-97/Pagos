@@ -322,6 +322,10 @@ Vue.component('enviar-tansfer', {
         userID: this.infoUser.id
       }).then( res => {
         console.log(res);
+        this.toUser.name = ''
+        this.coin.name = ''
+        this.coin.wallet = ''
+        this.coin.mount = 0
       })
       .catch(function (error) {
         // handle error

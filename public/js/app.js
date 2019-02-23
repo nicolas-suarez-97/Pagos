@@ -83368,6 +83368,8 @@ Vue.component('enviar-tansfer', {
       });
     },
     sendTransation: function sendTransation() {
+      var _this2 = this;
+
       var url = 'api/colpeso/';
       toastr.info('enviando a ' + this.toUser.name);
       axios.put(url + this.toUser.id, {
@@ -83375,6 +83377,10 @@ Vue.component('enviar-tansfer', {
         userID: this.infoUser.id
       }).then(function (res) {
         console.log(res);
+        _this2.toUser.name = '';
+        _this2.coin.name = '';
+        _this2.coin.wallet = '';
+        _this2.coin.mount = 0;
       }).catch(function (error) {
         // handle error
         console.log(error);
@@ -83410,18 +83416,18 @@ var app = new Vue({
   },
   methods: {
     getUser: function getUser() {
-      var _this2 = this;
+      var _this3 = this;
 
       var user = document.querySelector('#userID');
       var userID = user.value;
       axios.get('api/user/' + userID).then(function (res) {
-        _this2.user.id = res.data.id;
-        _this2.user.name = res.data.name;
-        _this2.user.email = res.data.email;
-        _this2.user.walletBTC = res.data.walletBTC;
-        _this2.user.walletETH = res.data.walletETH;
-        _this2.user.walletBCH = res.data.walletBCH;
-        _this2.user.walletCOL = res.data.walletCOL;
+        _this3.user.id = res.data.id;
+        _this3.user.name = res.data.name;
+        _this3.user.email = res.data.email;
+        _this3.user.walletBTC = res.data.walletBTC;
+        _this3.user.walletETH = res.data.walletETH;
+        _this3.user.walletBCH = res.data.walletBCH;
+        _this3.user.walletCOL = res.data.walletCOL;
       });
     },
     printQr: function printQr() {
