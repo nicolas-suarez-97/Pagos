@@ -24,7 +24,6 @@
       <enviar-tansfer :info-user="user"/>
     </div>
   @endif
-
 @endsection
 
 @section('scripts')

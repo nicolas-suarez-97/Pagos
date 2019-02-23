@@ -13,9 +13,8 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::resource('/user', 'UsersController');
+Route::post('user/showWithWallet', 'UsersController@showWithWallet');
 
 Route::resource('transacciones', 'TransationsController');
 Route::resource('colpeso', 'ColPesosController')->only([
@@ -44,5 +43,3 @@ Route::middleware(['auth', 'role:user'])->group(function () {
 Route::resource('mount','ColPesosController')->only([
     'index', 'show', 'store', 'update', 'destroy'
 ]);
-
-Route::get('user/showWithWallet', 'UsersController@showWithWallet');

@@ -18,7 +18,7 @@ import VueRouter from 'vue-router'
 import WebFontLoader from 'webfontloader'
 import VueQrcodeReader from 'vue-qrcode-reader'
 const axios = require('axios');
-
+const toastr = require('toastr');
 
 Vue.use(Vuex)
 
@@ -163,7 +163,7 @@ Vue.component('enviar-tansfer', {
       <span>Leer número de cuenta</span>
     </v-tooltip>
         <v-text-field prepend-icon="account_balance_wallet" name="wallet" class="text-center" label="Wallet" type="text" v-model="coin.wallet"></v-text-field>
-        <v-text-field prepend-icon="account_balance_wallet" name="mount" class="text-center" label="Monto" type="number" v-model="coin.mount"></v-text-field>
+        <v-text-field prepend-icon="donut_small" name="mount" class="text-center" label="Monto" type="number" v-model="coin.mount"></v-text-field>
         <v-tooltip left>
           <v-btn slot="activator" @click="sendTransation()" icon large>
             <v-icon large class="text-info">send</v-icon>
@@ -276,8 +276,10 @@ Vue.component('enviar-tansfer', {
     },
     getUserWithWallet: function () {
       let userData
-      let url = 'api/user/showWithWallet?wallet=pesos:' + this.coin.wallet
-      axios.get(url).then(response => {
+      let url = 'api/user/showWithWallet?wallet=pesos'
+      axios.post(url,{
+        wallet: 'pesos:' + this.coin.wallet
+      }).then(response => {
         this.toUser.id = response.data.id
         this.toUser.name = response.data.name
         this.toUser.wallet = response.data.walletCOL
@@ -285,9 +287,10 @@ Vue.component('enviar-tansfer', {
     },
     sendTransation: function () {
       let url = 'api/colpeso/'
-      console.log('enviando a ' + this.toUser.name);
+      toastr.info('enviando a ' + this.toUser.name);
       axios.put(url + this.toUser.id, {
         mount : this.coin.mount,
+        userID: this.infoUser.id
       }).then( res => {
         console.log(res);
       })
@@ -295,7 +298,6 @@ Vue.component('enviar-tansfer', {
         // handle error
         console.log(error);
       })
-      console.log(this.toUser.id);
     }
   }
 })
@@ -309,6 +311,9 @@ const app = new Vue({
       'qrcode-drop-zone': VueQrcodeReader.QrcodeDropZone,
       'qrcode-capture': VueQrcodeReader.QrcodeCapture,
     },
+    created: function () {
+      this.getUser()
+    },
     mounted: function (){
       this.col()
     },
@@ -317,38 +322,42 @@ const app = new Vue({
       source: null,
       printer: false,
       user: {
+        id: 0,
         name: '',
-        publicKey: '',
-        wallet: ''
+        email: '',
+        walletBTC: '',
+        walletETH: '',
+        walletBCH: '',
+        walletCOL: ''
       }
     },
     methods: {
       getUser: function () {
-        axios.get('api/user').then(function (res) {
-          console.log(res);
+        let user = document.querySelector('#userID')
+        let userID = user.value
+        axios.get('api/user/'+userID).then(res => {
+          this.user.id = res.data.id
+          this.user.name = res.data.name
+          this.user.email = res.data.email
+          this.user.walletBTC = res.data.walletBTC
+          this.user.walletETH = res.data.walletETH
+          this.user.walletBCH = res.data.walletBCH
+          this.user.walletCOL = res.data.walletCOL
         })
       },
       printQr: function () {
         this.printer = true
       },
       col: function () {
-        var wallet = document.querySelector('#walletCOL');
-        this.user.wallet = wallet.value
         this.printQr()
       },
       btc: function () {
-        var wallet = document.querySelector('#walletBTC');
-        this.user.wallet = wallet.value
         this.printQr()
       },
       eth: function () {
-        var wallet = document.querySelector('#walletETH');
-        this.user.wallet = wallet.value
         this.printQr()
       },
       bch: function () {
-        var wallet = document.querySelector('#walletBCH');
-        this.user.wallet = wallet.value
         this.printQr()
       }
     }

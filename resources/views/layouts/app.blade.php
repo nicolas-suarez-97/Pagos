@@ -21,7 +21,7 @@
     <div id="app">
       <div class="info-container">
         @auth
-          <input type="text" value="{{Auth::user()->name}}" v-model="user.name">
+          <input type="hidden" id="userID" value="{{Auth::user()->id}}">
         @endauth
       </div>
       <v-app id="inspire">

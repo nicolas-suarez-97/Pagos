@@ -86,7 +86,7 @@ class UsersController extends Controller
 
     public function showWithWallet(Request $request)
     {
-      $wallet = $request->wallet;
+      $wallet = $request->input('wallet');
       return User::where('walletCOL', $wallet)->first();
     }
 }

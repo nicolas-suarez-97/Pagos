@@ -14,5 +14,6 @@
   <input type="hidden" name="walletBTC" id="walletBTC" value="{{Auth::user()->walletBTC}}">
   <input type="hidden" name="walletETH" id="walletETH" value="{{Auth::user()->walletETH}}">
   <input type="hidden" name="walletBCH" id="walletBCH" value="{{Auth::user()->walletBCH}}">
+  <input type="hidden" name="userID" id="userID" value="{{Auth::user()->id}}">
   </div>
 @endsection
