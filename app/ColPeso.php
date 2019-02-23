@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 use App\User;
 use App\ColPeso;
+use App\Transation;
 
 class ColPeso extends Model
 {
@@ -55,7 +56,33 @@ class ColPeso extends Model
         'mount' => $toMount,
       ]);
 
+      $fromUser = User::find($toUserId);
+      $transation = new Transation();
+      $transation -> state = 1;
+      $transation -> mount = $mount;
+      $transation -> from_address = $fromUser -> walletCOL;
+      $transation -> moneda = 'pesos';
+      $transation->save();
+
+      $fromUser->transations()->attach($transation);
+
       //end transation
+
+
       return 'Transacción realizada con exito';
+    }
+
+    private function createTransation($mount, $userID)
+    {
+      $fromUser = User::find($userID);
+      $transation = new Transation();
+      $transation -> state = 1;
+      $transation -> mount = $mount;
+      $transation -> from_address = $fromUser -> walletCOL;
+      $transation -> moneda = 'pesos';
+      $transation->save();
+
+      $fromUser->transations()->attach($transation);
+      return;
     }
 }
