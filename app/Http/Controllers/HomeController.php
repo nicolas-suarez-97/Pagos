@@ -34,4 +34,12 @@ class HomeController extends Controller
           'user' => $user
         ]);
     }
+
+    public function enviar(Request $request)
+    {
+      $user = User::where('name', $request->user()->name);
+        return view('enviar',[
+          'user' => $user
+        ]);
+    }
 }

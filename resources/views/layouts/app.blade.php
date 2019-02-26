@@ -74,7 +74,7 @@
                   <v-icon>send</v-icon>
                 </v-list-tile-action>
                 <v-list-tile-content>
-                  <v-list-tile-title><a href="{{route('home')}}">Enviar Transferencia</a></v-list-tile-title>
+                  <v-list-tile-title><a href="{{route('enviar')}}">Enviar Transferencia</a></v-list-tile-title>
                 </v-list-tile-content>
               </v-list-tile>
 

@@ -20,3 +20,5 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/recibir', 'HomeController@recibir')->name('recibir');
+
+Route::get('/enviar', 'HomeController@enviar')->name('enviar');
