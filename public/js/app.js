@@ -83126,13 +83126,14 @@ Vue.component('recibir-tansfer', {
       var canvas;
       var canvasContainer;
       var createCanvas;
+      var canvas2;
 
       if ($('#canvasQR').length == 0) {
         if (v) {
           canvasContainer = document.querySelector('.qr-container');
           createCanvas = document.createElement('div');
           createCanvas.innerHTML = '<canvas id="canvasQR" width="200" height="200" class="img-responsive center-block img-thumbnail text-center">Tu navegador no soporta canvas</canvas>';
-          this.addControll(canvasContainer, createCanvas);
+          this.addCanvas(canvasContainer, createCanvas);
           canvas = $('#canvasQR');
 
           try {
@@ -83145,13 +83146,13 @@ Vue.component('recibir-tansfer', {
         } else {//this.infoUser.wallet = 'Wallet no asignada'
         }
       } else {
-        console.log('quitar elemento');
-
         if (v) {
+          canvas2 = document.querySelector('#canvasQR');
+          this.quiteCanvas(canvas2);
           canvasContainer = document.querySelector('.qr-container');
           createCanvas = document.createElement('div');
           createCanvas.innerHTML = '<canvas id="canvasQR" width="200" height="200" class="img-responsive center-block img-thumbnail text-center">Tu navegador no soporta canvas</canvas>';
-          this.addControll(canvasContainer, createCanvas);
+          this.addCanvas(canvasContainer, createCanvas);
           canvas = $('#canvasQR');
 
           try {
@@ -83165,12 +83166,15 @@ Vue.component('recibir-tansfer', {
         }
       }
     },
-    addControll: function addControll(e, i) {
+    addCanvas: function addCanvas(e, i) {
       if (e.nextSibling) {
         e.parentNode.insertBefore(i, e.nextSibling);
       } else {
         e.parentNode.appendChild(i);
       }
+    },
+    quiteCanvas: function quiteCanvas(e) {
+      e.parentNode.removeChild(e);
     },
     col: function col() {
       var wallet = {
