@@ -42,4 +42,12 @@ class HomeController extends Controller
           'user' => $user
         ]);
     }
+
+    public function perfil(Request $request)
+    {
+      $user = User::where('name', $request->user()->name);
+        return view('perfil',[
+          'user' => $user
+        ]);
+    }
 }

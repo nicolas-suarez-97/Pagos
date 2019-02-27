@@ -365,7 +365,8 @@ const app = new Vue({
         walletBTC: '',
         walletETH: '',
         walletBCH: '',
-        walletCOL: ''
+        walletCOL: '',
+        addressCOL: '',
       }
     },
     methods: {
@@ -373,6 +374,8 @@ const app = new Vue({
         let user = document.querySelector('#userID')
         let userID = user.value
         axios.get('api/user/'+userID).then(res => {
+          let address
+
           this.user.id = res.data.id
           this.user.name = res.data.name
           this.user.email = res.data.email
@@ -380,6 +383,8 @@ const app = new Vue({
           this.user.walletETH = res.data.walletETH
           this.user.walletBCH = res.data.walletBCH
           this.user.walletCOL = res.data.walletCOL
+          address = this.quiteDosPuntos(res.data.walletCOL)
+          this.user.addressCOL = address[1]
         })
       },
       printQr: function () {
@@ -396,6 +401,10 @@ const app = new Vue({
       },
       bch: function () {
         this.printQr()
+      },
+      quiteDosPuntos: function (s) {
+        var separador = ':'
+        return s.split(separador)
       }
     }
 });
