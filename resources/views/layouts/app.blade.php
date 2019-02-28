@@ -52,18 +52,18 @@
             @if(Auth::user()->hasRole('admin'))
               <v-list-tile @click="">
                 <v-list-tile-action>
-                  <v-icon>home</v-icon>
+                  <v-icon>send</v-icon>
                 </v-list-tile-action>
                 <v-list-tile-content>
-                  <v-list-tile-title><a href="{{route('home')}}">Depositar</a></v-list-tile-title>
+                  <v-list-tile-title><a href="{{route('enviar')}}">Envíar saldos</a></v-list-tile-title>
                 </v-list-tile-content>
               </v-list-tile>
               <v-list-tile @click="">
                 <v-list-tile-action>
-                  <v-icon>home</v-icon>
+                  <v-icon>get_app</v-icon>
                 </v-list-tile-action>
                 <v-list-tile-content>
-                  <v-list-tile-title><a href="{{route('home')}}">Gestor de monedas</a></v-list-tile-title>
+                  <v-list-tile-title><a href="{{route('recibir')}}">Recibir Transferencia</a></v-list-tile-title>
                 </v-list-tile-content>
               </v-list-tile>
 

@@ -2,13 +2,7 @@
 
 @section('content')
   @if(Auth::user()->hasRole('admin'))
-    <v-card>
-      <v-card-text>
-        <p class="display-2 .font-weight-thin.font-italic text-info">Paga Fácil</p>
-      </v-card-text>
-    </v-card>
-
-
+    @include('home.admin')
   @elseif (Auth::user()->hasRole('aliado'))
     <h2>Transferir a:</h2>
     <h2 class="text-info">{{Auth::user()->name}}</h2>
