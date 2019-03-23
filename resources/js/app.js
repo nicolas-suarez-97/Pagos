@@ -178,6 +178,7 @@ Vue.component('enviar-tansfer', {
   template: `
     <div>
     <v-card>
+      <p class="text-warning" v-if="message.error" v-text="message.error"></p>
       <v-card-title>Transferir</v-card-title>
       <v-card-text
       v-if="!camera.active"
@@ -227,6 +228,9 @@ Vue.component('enviar-tansfer', {
     return {
       result: '',
       error: '',
+      message: {
+        error: ''
+      },
       camera: {
         active: false,
         loading: false,
@@ -334,6 +338,8 @@ Vue.component('enviar-tansfer', {
       .catch(function (error) {
         // handle error
         console.log(error);
+        this.message.error(error)
+        toastr.error(error);
       })
     }
   }
