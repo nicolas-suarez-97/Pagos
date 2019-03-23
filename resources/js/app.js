@@ -75,7 +75,7 @@ Vue.component('recibir-tansfer', {
   props: ['info-user'],
   data: () => {
     return {
-      url: 'http://localhost:8000/',
+      url: 'https://4c62bb48.ngrok.io/',
       wallet: {
         name: '',
         address: ''
