@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-  <h2>Recibir Transferencia:</h2>
+  <h2>Enviar Transferencia:</h2>
   <h2 class="text-info">{{Auth::user()->name}}</h2>
   {{-- @foreach ($user->transations as $transation)
     <h2 class="h3 text-info">{{$transation->mount}}</h2>
